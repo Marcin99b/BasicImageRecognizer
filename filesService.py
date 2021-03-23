@@ -37,6 +37,7 @@ def generate():
         for imageName in os.listdir('numbers\\' + folderNameNumber):
             image = Image.open(
                 'numbers\\' + folderNameNumber + '\\' + imageName)
+            image = image.resize((22, 22))
             data = np.array(image)
             data = np.array(list(map(transformImage, data)))
 
@@ -47,5 +48,5 @@ def generate():
 
 
 # print(os.getcwd())
-# generate()
+generate()
 # run -> python filesService.py
