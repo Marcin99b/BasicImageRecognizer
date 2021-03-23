@@ -37,7 +37,7 @@ def generate():
         for imageName in os.listdir('numbers\\' + folderNameNumber):
             image = Image.open(
                 'numbers\\' + folderNameNumber + '\\' + imageName)
-            image = image.resize((22, 22))
+            image = image.resize((22, 22))  # 88x88 -> 22x22
             data = np.array(image)
             data = np.array(list(map(transformImage, data)))
 
