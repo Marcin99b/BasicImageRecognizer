@@ -8,9 +8,27 @@ generatedImagesPath = os.getcwd() + '\\numbers\\images.npy'
 
 
 def getNumbers():
-    labels = list(np.load(generatedLabelsPath, allow_pickle=True))
-    images = list(np.load(generatedImagesPath, allow_pickle=True))
+    labels = np.array(np.load(generatedLabelsPath, allow_pickle=True))
+    images = np.array(np.load(generatedImagesPath, allow_pickle=True))
     return labels, images
+
+
+def transformPixel(pixel):
+    # 0.0 = white
+    # 1.0 = black
+    # between 0.0 and 1.0 = gray
+    if np.issubdtype(type(pixel), int):
+        return 0
+    pixel = (pixel - 255) / 255
+    result = np.average(pixel) * 100/75
+    return result
+
+
+def transformImage(row):
+    if len(row) == 87:
+        # all images should be 88x88 but some are 88x87
+        row = np.append(row, [255, 255, 255, 255])
+    return np.array(list(map(transformPixel, row)))
 
 
 def generate():
@@ -22,7 +40,9 @@ def generate():
         for imageName in os.listdir('numbers\\' + folderNameNumber):
             image = Image.open(
                 'numbers\\' + folderNameNumber + '\\' + imageName)
-            data = np.asarray(image)
+            data = np.array(image)
+            data = np.array(list(map(transformImage, data)))
+
             images.append(data)
             labels.append(folderNameNumber)
     np.save(generatedLabelsPath, labels)
@@ -30,5 +50,5 @@ def generate():
 
 
 # print(os.getcwd())
-# generate()
+generate()
 # run -> python filesService.py
