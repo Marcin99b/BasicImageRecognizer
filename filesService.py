@@ -25,9 +25,6 @@ def transformPixel(pixel):
 
 
 def transformImage(row):
-    if len(row) == 87:
-        # all images should be 88x88 but some are 88x87
-        row = np.append(row, [255, 255, 255, 255])
     return np.array(list(map(transformPixel, row)))
 
 
