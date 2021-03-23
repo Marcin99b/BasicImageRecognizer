@@ -50,5 +50,5 @@ def generate():
 
 
 # print(os.getcwd())
-generate()
+# generate()
 # run -> python filesService.py
