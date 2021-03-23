@@ -1,6 +1,6 @@
 import os
 from PIL import Image
-from numpy import asarray, save, load
+import numpy as np
 
 
 generatedLabelsPath = os.getcwd() + '\\numbers\\labels.npy'
@@ -8,8 +8,8 @@ generatedImagesPath = os.getcwd() + '\\numbers\\images.npy'
 
 
 def getNumbers():
-    labels = load(generatedLabelsPath)
-    images = load(generatedImagesPath)
+    labels = np.load(generatedLabelsPath, allow_pickle=True)
+    images = np.load(generatedImagesPath, allow_pickle=True)
     return labels, images
 
 
@@ -22,14 +22,13 @@ def generate():
         for imageName in os.listdir('numbers\\' + folderNameNumber):
             image = Image.open(
                 'numbers\\' + folderNameNumber + '\\' + imageName)
-            data = asarray(image)
+            data = np.asarray(image)
             images.append(data)
             labels.append(folderNameNumber)
-    save(generatedLabelsPath, labels)
-    save(generatedImagesPath, images)
+    np.save(generatedLabelsPath, labels)
+    np.save(generatedImagesPath, images)
 
 
-print(os.getcwd())
-
-generate()
+# print(os.getcwd())
+# generate()
 # run -> python filesService.py
