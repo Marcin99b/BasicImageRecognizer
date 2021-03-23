@@ -13,21 +13,6 @@ def getNumbers():
     return labels, images
 
 
-def transformPixel(pixel):
-    # 0.0 = white
-    # 1.0 = black
-    # between 0.0 and 1.0 = gray
-    if np.issubdtype(type(pixel), int):
-        return 0
-    pixel = (pixel - 255) / 255
-    result = np.average(pixel) * 100/75
-    return result
-
-
-def transformImage(row):
-    return np.array(list(map(transformPixel, row)))
-
-
 def generate():
     images = []
     labels = []
@@ -37,10 +22,9 @@ def generate():
         for imageName in os.listdir('numbers\\' + folderNameNumber):
             image = Image.open(
                 'numbers\\' + folderNameNumber + '\\' + imageName)
-            image = image.resize((22, 22))  # 88x88 -> 22x22
-            data = np.array(image)
-            data = np.array(list(map(transformImage, data)))
-
+            image = image.resize((16, 16)).convert('L')
+            #image.save("test\\" + imageName)
+            data = np.asarray(image)
             images.append(data)
             labels.append(folderNameNumber)
     np.save(generatedLabelsPath, labels)
@@ -48,5 +32,5 @@ def generate():
 
 
 # print(os.getcwd())
-generate()
+# generate()
 # run -> python filesService.py
