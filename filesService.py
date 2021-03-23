@@ -8,8 +8,8 @@ generatedImagesPath = os.getcwd() + '\\numbers\\images.npy'
 
 
 def getNumbers():
-    labels = np.load(generatedLabelsPath, allow_pickle=True)
-    images = np.load(generatedImagesPath, allow_pickle=True)
+    labels = list(np.load(generatedLabelsPath, allow_pickle=True))
+    images = list(np.load(generatedImagesPath, allow_pickle=True))
     return labels, images
 
 
